@@ -4,17 +4,17 @@ import './App.css';
 class App extends Component {
   render() {
     return (
-      <div class="Login">
-        <h1 class="Logo">Project D20</h1>
+      <div className="Login">
+        <h1 className="Logo">Project D20</h1>
       
         <form id="FormLogin" action="#">
-            <label for="email">
+            <label htmlFor="email">
                 <input type="email" name="email" id="LoginEmail" placeholder="Email" />
-                <span id="LoginEmailError" class="_MsgError"></span>
+                <span id="LoginEmailError" className="_MsgError"></span>
             </label>
-            <label for="password">
+            <label htmlFor="password">
                 <input type="password" name="password" id="LoginPassword" placeholder="Contraseña" />
-                <span id="LoginPasswordError" class="_MsgError"></span>
+                <span id="LoginPasswordError" className="_MsgError"></span>
             </label>
             <button type="submit">Entrar / Nuevo</button>
         </form>

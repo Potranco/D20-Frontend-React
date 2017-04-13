@@ -30,6 +30,7 @@ User.prototype.createEvents=function(){
     this.events.add('onNewUser',this.createNewUser.bind(this));
     this.events.add('onLoadCampaigns',this.onLoadCampaigns.bind(this));
     this.events.add('onLoadChars',this.onLoadChars.bind(this));
+    this.events.add('onLoad',this.onLoad.bind(this));
 };
 
 User.prototype.loadToken=function(){
@@ -52,14 +53,17 @@ User.prototype.callData=function(){
         LoadFile(ajax)
             .then(function(resolve){
                 this.insertData(JSON.parse(resolve));
+                this.events.onLoad(true);
                 this.events.onLoadUser();
             }.bind(this),
             function(error) {
                 console.error("Failed!", error);
+                this.events.onLoad(false);
                 return false;
             });    
     }
     else {
+        this.events.onLoad(true);
         this.events.onNewUser();
     }
     
@@ -114,6 +118,13 @@ User.prototype.getChars=function(){
     return Object.keys(this.chars).map(function(x) {
         return this.chars[x];
     }.bind(this));
+};
+
+User.prototype.onLoad=function(value){
+    return new Promise(function(response,reject){
+            
+            return value?response(value):reject(value);
+        });
 };
 
 export default User;
