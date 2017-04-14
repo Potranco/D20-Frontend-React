@@ -1,25 +1,32 @@
 import React, { Component } from 'react';
-import './App.css';
+import Login from './components/Login.js'
 
 class App extends Component {
+  
+  constructor(){
+    super();
+    this.state={
+      login:false,
+      menu:false,
+      page:'home'
+    }
+  }
+  
+  activeLogin(){
+    if (this.state.login==true) return <Login />
+  }
+  
+  componentWillMount(){
+    let valueLogin=(this.props.login=='true');
+    if (this.state.login!==valueLogin) this.setState({login:valueLogin},function(){})
+  }
+  
   render() {
     return (
-      <div className="Login">
-        <h1 className="Logo">Project D20</h1>
-      
-        <form id="FormLogin" action="#">
-            <label htmlFor="email">
-                <input type="email" name="email" id="LoginEmail" placeholder="Email" />
-                <span id="LoginEmailError" className="_MsgError"></span>
-            </label>
-            <label htmlFor="password">
-                <input type="password" name="password" id="LoginPassword" placeholder="Contraseña" />
-                <span id="LoginPasswordError" className="_MsgError"></span>
-            </label>
-            <button type="submit">Entrar / Nuevo</button>
-        </form>
+      <div>
+        {this.activeLogin()}
       </div>
-    );
+    )
   }
 }
 

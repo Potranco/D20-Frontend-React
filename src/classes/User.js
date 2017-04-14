@@ -6,7 +6,8 @@ import LoadFile from './libs/LoadFile.js'
 import Campaigns from './Campaigns.js'
 import Chars from './Chars.js'
 */
-function User(){
+function User(callback){
+    this.callback=callback?callback:false;
     this.idUser=null;
     this.name='anonymous';
     this.campaigns=null;
@@ -20,8 +21,8 @@ function User(){
     this.token=this.loadToken();
     this.events=new PubSub();
     this.createEvents();
-    this.events.isLogin();
-
+    //this.events.isLogin();
+    this.events.onLoad();
 }
 
 User.prototype.createEvents=function(){
@@ -30,7 +31,7 @@ User.prototype.createEvents=function(){
     this.events.add('onNewUser',this.createNewUser.bind(this));
     this.events.add('onLoadCampaigns',this.onLoadCampaigns.bind(this));
     this.events.add('onLoadChars',this.onLoadChars.bind(this));
-    this.events.add('onLoad',this.onLoad.bind(this));
+    this.events.add('onLoad',this.callback.bind(this));
 };
 
 User.prototype.loadToken=function(){
@@ -53,17 +54,14 @@ User.prototype.callData=function(){
         LoadFile(ajax)
             .then(function(resolve){
                 this.insertData(JSON.parse(resolve));
-                this.events.onLoad(true);
                 this.events.onLoadUser();
             }.bind(this),
             function(error) {
                 console.error("Failed!", error);
-                this.events.onLoad(false);
                 return false;
             });    
     }
     else {
-        this.events.onLoad(true);
         this.events.onNewUser();
     }
     
@@ -120,11 +118,6 @@ User.prototype.getChars=function(){
     }.bind(this));
 };
 
-User.prototype.onLoad=function(value){
-    return new Promise(function(response,reject){
-            
-            return value?response(value):reject(value);
-        });
-};
+User.prototype.onLoad=function(value){};
 
 export default User;
