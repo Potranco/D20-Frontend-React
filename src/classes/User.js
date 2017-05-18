@@ -36,13 +36,14 @@ User.prototype.createEvents=function(){
 
 User.prototype.loadToken=function(){
     if(typeof Stores!==undefined){
-        return localStorage.getItem('token');
+        return (localStorage.getItem('token')?localStorage.getItem('token'):false);
     }
     return false;
 };
 
 User.prototype.callData=function(){
     if (this.token) {
+        console.log('porque')
         var ajax={
             url:this.urls.token,
             method: 'GET',
@@ -51,10 +52,11 @@ User.prototype.callData=function(){
                 idUser:this.idUser
             }
         };
-        LoadFile(ajax)
+        return LoadFile(ajax)
             .then(function(resolve){
                 this.insertData(JSON.parse(resolve));
                 this.events.onLoadUser();
+                return true;
             }.bind(this),
             function(error) {
                 console.error("Failed!", error);
@@ -63,6 +65,7 @@ User.prototype.callData=function(){
     }
     else {
         this.events.onNewUser();
+        return false;
     }
     
 };
