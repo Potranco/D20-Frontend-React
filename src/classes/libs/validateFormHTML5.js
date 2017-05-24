@@ -45,17 +45,14 @@ function validateFormHTML5(idForm,jsonValidate={},callback=function(){}){
 
 validateFormHTML5.prototype.createSettings=function(){
 	var preSettings=this.jsonValidate;
+	return ((preSettings['rules'] && this.addRulestoSettings(preSettings['rules'])) ||
+					(preSettings['messages'] && this.addMessagestoSettings(preSettings['messages'])) ||
+					(preSettings['custom'] && this.addCustomtoSettings(preSettings['custom'])) ||
+					(preSettings['formValidate'] && (this.formValidate=this.jsonValidate.formValidate)) ||
+					this.addCustomDefaulttoSettings()
+	);
 
-	for (var index in preSettings){
-		if (index==='rules') this.addRulestoSettings(preSettings[index]);
-        if (index==='messages') this.addMessagestoSettings(preSettings[index]);
-		if (index==='custom') {
-			this.addCustomtoSettings(preSettings[index]);
-		}
-		if (index==='formValidate') this.formValidate=this.jsonValidate.formValidate;
 
-		this.addCustomDefaulttoSettings();
-	}
 };
 
 validateFormHTML5.prototype.addRulestoSettings=function(preRules){
@@ -66,7 +63,6 @@ validateFormHTML5.prototype.addRulestoSettings=function(preRules){
 		this.settings[index].rules.max_length = typeof preRules[index].max_length !== 'undefined' ? preRules[index].max_length : '';
 		this.settings[index].rules.min_length = typeof preRules[index].min_length !== 'undefined' ? preRules[index].min_length : '';
 		this.settings[index].rules.custom = typeof preRules[index].custom !== 'undefined' ? preRules[index].custom : '';
-
 	}
 };
 
@@ -131,7 +127,6 @@ validateFormHTML5.prototype.applyRules=function(){
 
 validateFormHTML5.prototype.validateInput=function(event){
 	var input=document.getElementById(event.target.id);
-
 	if (input.validity.valid===false) {
 		this.activeError(event);
 	}
@@ -145,7 +140,6 @@ validateFormHTML5.prototype.activeError=function(event){
 	var labelInvalid=document.querySelector('#'+this.idform+' label[for=\''+inputInvalid.getAttribute('name')+'\']');
 	var divError;
 	if (inputInvalid.validity.valid===false) {
-
 		if (typeof this.messageInputError(event)!=='undefined') {
 			if (this.settings[event.target.id].custom['idError']==='') {
 				inputInvalid.setCustomValidity(this.messageInputError(event));
@@ -155,11 +149,11 @@ validateFormHTML5.prototype.activeError=function(event){
 				if (divError!==null) {
                     divError.innerHTML=this.messageInputError(event);
 					divError.style.display='block';
-                }
-			}
         }
-		this.addCssCustom(event.target.id);
+			}
     }
+	this.addCssCustom(event.target.id);
+  }
 	else {
 		this.removeCssCustom(event.target.id);
 	}
@@ -186,7 +180,6 @@ validateFormHTML5.prototype.messageInputError=function(event){
 	if (inputInvalid.validity.tooShort===true) {
 		message=this.settings[event.target.id].messages.min_length;
 	}
-
 	return message;
 };
 

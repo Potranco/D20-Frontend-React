@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import ValidateForm from '../classes/libs/validateFormHTML5';
+import ValidateForm from '../../classes/libs/validateFormHTML5';
+import css from './login.css'
 
 class Login extends Component {
 
@@ -10,8 +11,7 @@ class Login extends Component {
                         LoginEmail: {
                            required:true,
                            max_length:'200',
-                           min_length:'3',
-                           custom:'email'
+                           min_length:'3'
                         },
                         LoginPassword: {
                             required:true,
@@ -23,7 +23,8 @@ class Login extends Component {
                        LoginEmail: {
                            required:'Campo incorecto',
                            max_length:'Maximo de 200 caracteres',
-                           min_length:'Minimo de 3 caracteres'
+                           min_length:'Minimo de 3 caracteres',
+                           custom:'Email no valido'
                        },
                        LoginPassword:{
                             required:'Campo incorrecto',
