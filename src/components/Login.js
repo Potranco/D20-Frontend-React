@@ -1,11 +1,59 @@
 import React, { Component } from 'react';
+import ValidateForm from '../classes/libs/validateFormHTML5';
 
 class Login extends Component {
+
+  componentDidMount(){
+    var validateForm = new ValidateForm('FormLogin',{
+            formValidate:'true',
+            rules: {
+                        LoginEmail: {
+                           required:true,
+                           max_length:'200',
+                           min_length:'3',
+                           custom:'email'
+                        },
+                        LoginPassword: {
+                            required:true,
+                            max_length:'12',
+                            min_length:'5'
+                        }
+            },
+            messages: {
+                       LoginEmail: {
+                           required:'Campo incorecto',
+                           max_length:'Maximo de 200 caracteres',
+                           min_length:'Minimo de 3 caracteres'
+                       },
+                       LoginPassword:{
+                            required:'Campo incorrecto',
+                            max_length:'Maximo de 12 caracteres',
+                            min_length:'Minimo de 5 caracteres'
+                       }
+            },
+            custom: {
+                      LoginEmail: {
+                          inputCSS:'',
+                          labelCSS:'_InputError',
+                          idError:'LoginEmailError'
+                      },
+                       LoginPassword: {
+                          inputCSS:'',
+                          labelCSS:'_InputError',
+                          idError:'LoginPasswordError'
+                      }
+            }
+    },this.newUser);
+  }
+
+  newUser(){
+    console.log('Create new user');
+  }
+
   render() {
     return (
       <div className="Login">
         <h1 className="Logo">Project D20</h1>
-      
         <form id="FormLogin" action="#">
             <label htmlFor="email">
                 <input type="email" name="email" id="LoginEmail" placeholder="Email" />

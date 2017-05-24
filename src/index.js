@@ -16,15 +16,8 @@ function createUser(){
 function activeLogin(){
     let token=(this.token==false);
     ReactDOM.render(<App login={token} />,document.getElementById('login'));
-    
 }
 
 function activeUser(){
     ReactDOM.render(<App login="false" />,document.getElementById('login'));
 }
-
-
-
-
-
-
