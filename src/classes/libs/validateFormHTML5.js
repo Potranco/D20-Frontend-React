@@ -107,7 +107,7 @@ validateFormHTML5.prototype.applyRules=function(){
 			input=document.getElementById(index).setAttribute(this.AttributeInputs.required,this.AttributeInputs.required);
     }
 		if (settings[index].rules.email) {
-			input=document.getElementById(index).setAttribute('pattern',this.regexps[settings[index].rules.custom]);
+			input=document.getElementById(index).setAttribute('type','email');
     }
 		if (settings[index].rules.custom) {
 			input=document.getElementById(index).setAttribute('pattern',this.regexps[settings[index].rules.custom]);

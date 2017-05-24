@@ -11,7 +11,8 @@ class Login extends Component {
                         LoginEmail: {
                            required:true,
                            max_length:'200',
-                           min_length:'3'
+                           min_length:'3',
+                           email:true
                         },
                         LoginPassword: {
                             required:true,
@@ -57,7 +58,7 @@ class Login extends Component {
         <h1 className="Logo">Project D20</h1>
         <form id="FormLogin" action="#">
             <label htmlFor="email">
-                <input type="email" name="email" id="LoginEmail" placeholder="Email" />
+                <input type="text" name="email" id="LoginEmail" placeholder="Email" />
                 <span id="LoginEmailError" className="_MsgError"></span>
             </label>
             <label htmlFor="password">
